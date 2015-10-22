@@ -1,0 +1,262 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="BootstrapStyler">
+    <title>Backlog - {{ team_name }}</title>
+
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="http://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+	<style type="text/css">
+	    #sortMe
+	    {
+	        list-style-type: none;
+	        margin: 0;
+	        padding: 0;
+	        width: 100px;
+	    }
+	    
+	</style>
+	<script>
+	   $(function(){
+	      $("#sortMe").sortable();
+	   });
+	</script>
+	
+	
+body { padding-top: 70px; }
+
+
+</head>
+
+<body>
+ <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Eplanning Enterprises</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/estory">Home</a></li>
+            <li><a href="/admin">Admin</a></li>
+            <li class="active"><a href="#"><b>{{ team_name }}</b></a></li>
+
+          </ul>
+     <ul class="nav navbar-nav navbar-right">
+        <li><a data-toggle="modal" href="#" data-target="#new_us">New Story</a></li>
+        <li><a href="estory/{{team_name}}/priority">Set Priority</a></li>
+
+         <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Import <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="estory/{{team_name}}/import_from_file">From Qualitor</a></li>
+            <li><a href="estory/{{team_name}}/import_from_csv">From csv</a></li>
+
+          </ul>
+        </li>
+        <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+     </ul>
+
+
+        </div><!--/.nav-collapse -->
+
+      </div>
+    </div>
+
+
+ <p>{{ team_name }}<p>
+
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+            Current Sprint:   27/10/2014 - 10/11/2014
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+             <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Story-ID</th>
+            <th>Story Title</th>
+			<th>Description</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          	{% for  sprint_backlog in sprint_backlog %}
+        	<tr>
+                <td><a href ="{{ team_name }}/{{ sprint_backlog.task_id }}/">{{ sprint_backlog.task_id }}</a></td>
+
+    			<td>{{ sprint_backlog.task_title }}</td>
+    			<td>{{ sprint_backlog.task_body }}</td>
+
+
+        	</tr>
+        	{% endfor %}
+        </tbody>
+   </table>
+         </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          Team Backlog
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+             <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Story-ID</th>
+            <th>RE</th>
+            <th>Story Title</th>
+            <th>Status</th>
+			
+            <th>Estimative (Hours)</th>
+
+          </tr>
+        </thead>
+ <p>
+ <div class="btn-group" data-toggle="buttons">
+  <label class="btn btn-primary active">
+    <input type="checkbox" autocomplete="off" checked>RE
+  </label>
+  <label class="btn btn-primary">
+    <input type="checkbox" autocomplete="off">Estimado
+  </label>
+  <label class="btn btn-primary">
+    <input type="checkbox" autocomplete="off">Priorizado
+  </label>
+  
+</div></p>
+        <tbody id="sortMe">
+          	{% for  stories_backlog in stories_backlog %}
+        	<tr>
+                <td><a href ="backlog/{{ stories_backlog.task_id }}/">{{ stories_backlog.id_qualitor }}</a></td>
+				<td>{{ stories_backlog.ticket_payback }} </td>
+    			<td>{{ stories_backlog.ticket_title }}</td>
+    			<td>{{ stories_backlog.ticket_status}}</td>
+    			<td>{{ stories_backlog.ticket_estimation }}</td>
+			</tr>
+			
+
+        	{% endfor %}
+        </tbody>
+   </table>
+      </div>
+    </div>
+  </div>
+   <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+Finished Sprints        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse">
+      <div class="panel-body">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Story-ID</th>
+            <th>Story Title</th>
+            <th>Status</th>
+			<th>Description</th>
+            <th>Inclusion time</th>
+
+          </tr>
+        </thead>
+        <!--
+        <tbody>
+          	{% for  done_backlog in done_backlog %}
+        	<tr>
+                <td><a href ="backlog/{{ done_backlog.task_id }}/">{{ done_backlog.task_id }}</a></td>
+
+    			<td>{{ done_backlog.task_title }}</td>
+    			<td>{{ done_backlog.status}}</td>
+    			<td>{{ done_backlog.task_body }}</td>
+    			<td>{{ done_backlog.created_date }}</td>
+
+
+        	</tr>
+        	{% endfor %}
+        </tbody>
+        -->
+   </table>      </div>
+    </div>
+  </div>
+</div>
+
+     <div class="modal fade" id="new_us" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="NewUSLabel">New User Story</h4>
+          </div>
+          <div class="modal-body">
+
+		  
+		  
+<div class="bs-story">
+
+    <form action="/estory/{{ team_name }}/new" method="post"> {% csrf_token %}
+        <div class="form-group">
+            <input type="number"  class="form-control" id="task_id" name="task_id" placeholder="Story ID">
+    			<input type="hidden" id="team_id" name="team_id" class="form-control" value="{{team_id}}">
+            <input type="text"  id="task_title" name="task_title" placeholder="Story Title" class="form-control" >
+ 			<textarea  class="form-control"  name="task_body" id="task_body" rows="4" placeholder="Story Description"></textarea>
+			 <select class="form-control" placeholder="Backlog" name="status" id="status">
+				<option value="Backlog">Backlog</option>
+				<option value="Planned">Planned</option>
+				<option value="Done">Done</option>
+			</select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+	
+
+</div>
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <title>Projects </title>
+
+    <link href="{% static "priority/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "prioriry/bootstrap/css/font-awesome.min.css" %}" rel="stylesheet">
+    <link href="{% static "priority/bootstrap/css/bootstrap-switch.min.css" %}" rel="stylesheet">
+
+body { padding-top: 70px; }
+</head>
+<body>
+
+
+
+
+
+  <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Eplanning Enterprises</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/estory">Home</a></li>
+            <li><a href="/admin">Admin</a></li>
+
+          </ul>
+
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10 col-md-push-2 col-sm-9 col-sm-push-3 col-no-left-padding">
+            <section id="middle">
+
+
+                <div class="page-header"><h1>Projects</h1>
+
+                    </div>
+                <div id="content">
+                    <div class="row">
+                         	{% for teams_list in teams_list %}
+                        <div class="col-md-4">
+                            <div class="panel panel-default project">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="pull-left"><h4><a
+                                                    href="backlog/{{ teams_list.id}}">{{ teams_list.team_name }}</a></h4></div>
+                                            <div class="pull-right client-info"><span
+                                                    class="percent text-danger">{{teams_list.id}}</span></div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <ul class="list-unstyled">
+                                        <li>Assigned tasks <span class="pull-right label label-default">{{team_list}}</span></li>
+                                        <li>Pending tasks <span class="pull-right label label-warning">23</span></li>
+                                        <li>Completed tasks <span class="pull-right label label-success">15</span></li>
+										<li>Team availability (hours) <span class="pull-right label label-success">{{ teams_list.team_capacity}}</span></li>
+                                    </ul>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-sm-4"><span class="small muted">Progress</span></div>
+                                        <div class="col-sm-8">
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-danger" role="progressbar"
+                                                     aria-valuenow="24" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width: 24%"><span class="sr-only">24% Complete (success)</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+    <script src="{% static "prioriy/bootstrap/js/bootstrap.min.js" %}"></script>
+
+</body>
+</html>
